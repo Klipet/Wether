@@ -5,6 +5,11 @@
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+        <item name="colorPrimary">@color/transparent</item>
+        <item name="android:windowFullscreen">true</item>
+
     </style>
     <style name="Theme.Wether" parent="Base.Theme.Wether" />
+
+
 </resources>

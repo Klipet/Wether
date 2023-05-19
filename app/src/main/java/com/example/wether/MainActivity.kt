@@ -19,11 +19,10 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(R.layout.activity_main)
         setContentView(binding.root)
-        binding.button.setOnClickListener {
            supportFragmentManager
                .beginTransaction().replace(R.id.placeholder, MainFragment.newInstance()).commit()
 
-        }
+
     }
 
 }

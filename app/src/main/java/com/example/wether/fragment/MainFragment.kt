@@ -9,14 +9,24 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.fragment.app.FragmentActivity
 import com.example.wether.R
+import com.example.wether.adapters.VpAdapter
 import com.example.wether.databinding.FragmentMainBinding
-
+import com.google.android.material.tabs.TabLayoutMediator
 
 
 class MainFragment : Fragment() {
     private lateinit var pLauncher: ActivityResultLauncher<String>
     private lateinit var binding: FragmentMainBinding
+    private val fList = listOf(
+        HoursFragment.newInstance(),
+        DaysFragment.newInstance()
+    )
+    private val tList = listOf(
+        "Hours",
+        "Days"
+    )
 
 
     override fun onCreateView(
@@ -31,6 +41,15 @@ class MainFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         checkPermision()
+        init()
+    }
+    private fun init() = with(binding){
+        val adapter = VpAdapter(activity as FragmentActivity, fList)
+        vp.adapter = adapter
+        TabLayoutMediator(tabLayout, vp){
+            tab, pos -> tab.text = tList[pos]
+
+        }.attach()
 
     }
 
