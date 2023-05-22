@@ -11,7 +11,7 @@ import com.example.wether.databinding.ActivityMainBinding
 import com.example.wether.fragment.MainFragment
 import org.json.JSONObject
 
-const val API_KEY = "dcc638b9622d4a668c4133433231805"
+//const val API_KEY = "dcc638b9622d4a668c4133433231805"
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
