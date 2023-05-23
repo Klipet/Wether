@@ -21,6 +21,7 @@ import com.example.wether.adapters.VpAdapter
 import com.example.wether.adapters.WeatherMode
 import com.example.wether.databinding.FragmentMainBinding
 import com.google.android.material.tabs.TabLayoutMediator
+import com.squareup.picasso.Picasso
 import org.json.JSONObject
 
 
@@ -51,7 +52,8 @@ class MainFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         checkPermision()
         init()
-        reqestWeatherData("London")
+        updateCurrentCard()
+        reqestWeatherData("Chisinau")
     }
     private fun init() = with(binding){
         val adapter = VpAdapter(activity as FragmentActivity, fList)
@@ -123,6 +125,7 @@ class MainFragment : Fragment() {
             )
             list.add(item)
         }
+        model.liveDataList.value = list
         return list
 
     }
@@ -137,13 +140,24 @@ class MainFragment : Fragment() {
             imageUrl = mainObject.getJSONObject("current").getJSONObject("condition").getString("icon"),
             hours = weatherItem.hours
         )
+        model.liveDataCurrent.value = item
         Log.d("MyLog","city: ${item.hours}")
         Log.d("MyLog","Lastupdate: ${item.maxTemp}")
         Log.d("MyLog","Lastupdate: ${item.minTemp}")
 
     }
-    private fun updateCurrentCard(){
-        model
+    private fun updateCurrentCard() = with(binding){
+        model.liveDataCurrent.observe(viewLifecycleOwner){
+            val maxMinTemp = "${it.maxTemp}°C/${it.minTemp}°C"
+            tvData.text = it.time
+            tvCity.text = it.city
+            tvCurrentTemp.text = it.currentTemp
+            tvCondition.text = it.condition
+            tvMaxMin.text = maxMinTemp
+            Picasso.get().load("https:" + it.imageUrl).into(imVeather)
+
+
+        }
     }
 
 
