@@ -7,9 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.ListAdapter
 import com.example.wether.MainViewModel
-import com.example.wether.R
 import com.example.wether.adapters.WeatherAdapter
 import com.example.wether.adapters.WeatherMode
 import com.example.wether.databinding.FragmentDaysBinding
@@ -50,6 +48,7 @@ class DaysFragment : Fragment(), WeatherAdapter.Listener {
     }
 
     override fun onclick(item: WeatherMode) {
+        model.liveDataCurrent.value = item
 
     }
 }

@@ -1,7 +1,5 @@
 package com.example.wether.adapters
 
-import android.os.Parcel
-import android.os.Parcelable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,15 +7,21 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.wether.R
-
 import com.example.wether.databinding.ListItemBinding
 import com.squareup.picasso.Picasso
 
-class WeatherAdapter(val lestener: Listener?) : ListAdapter<WeatherMode, WeatherAdapter.Holder>(Comporator()) {
-    class Holder(view: View): RecyclerView.ViewHolder(view){
+class WeatherAdapter(val listener: Listener?) : ListAdapter<WeatherMode, WeatherAdapter.Holder>(Comporator()) {
+    class Holder(view: View, val listener: Listener?): RecyclerView.ViewHolder(view){
         val binding = ListItemBinding.bind(view)
+        var itemTemp: WeatherMode? = null
+        init {
+            itemView.setOnClickListener{
+                itemTemp?.let { it1 -> listener?.onclick(it1)}
+            }
+        }
 
         fun bind(item: WeatherMode) = with(binding){
+            itemTemp = item
             tvDate.text = item.time
             tvCondtion.text= item.condition
             tvTemp.text= item.currentTemp.ifEmpty { "${item.maxTemp}°C /${item.minTemp}°C"}
@@ -39,7 +43,7 @@ class WeatherAdapter(val lestener: Listener?) : ListAdapter<WeatherMode, Weather
 // ресуим  элименты забирая все из списка элиментов bind
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.list_item, parent, false)
-        return Holder(view)
+        return Holder(view, listener)
     }
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
